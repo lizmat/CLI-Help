@@ -17,7 +17,9 @@
   "resources": [
   ],
   "source-url": "https://github.com/lizmat/CLI-Help",
-  "tags": [ "CLI", "HELP"
+  "tags": [
+    "CLI",
+    "HELP"
   ],
   "test-depends": [
   ],
