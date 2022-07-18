@@ -6,16 +6,14 @@ sub EXPORT($RESOURCES, &proto, &handle = &default-handler) {
     with $RESOURCES {
         &proto.add_dispatchee:
         my multi sub MAIN(*@keys, :h(:$help)!, :$verbose) {
-            CATCH {
+            with quietly $RESOURCES{('help',|@keys).join("/") ~ '.txt'}.open {
+                handle .slurp(:close).chomp, @keys, :$verbose;
+                exit;
+            } 
+            else {
                 note("Unknown help category: @keys[]");
                 exit 1;
             }
-            handle
-              $RESOURCES{("help",|@keys).join("/") ~ ".txt"}.slurp.chomp,
-              @keys,
-              :$verbose
-            ;
-            exit;
         }
     }
 
