@@ -2,6 +2,9 @@ Revision history for CLI-Help
 
 {{$NEXT}}
 
+0.0.3  2022-07-22T16:28:29+02:00
+    - Add option to only allow --help
+
 0.0.2  2022-07-18T20:37:19+02:00
     - Fix warning for unknown subsections
 

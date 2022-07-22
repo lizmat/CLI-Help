@@ -2,10 +2,9 @@ sub default-handler($text, @, :verbose($)) {
     say $text;
 }
 
-sub EXPORT($RESOURCES, &proto, &handle = &default-handler) {
+sub EXPORT($RESOURCES, &proto, &handle = &default-handler, $long-only = "") {
     with $RESOURCES {
-        &proto.add_dispatchee:
-        my multi sub MAIN(*@keys, :h(:$help)!, :$verbose) {
+        my sub doit(@keys, $verbose) {
             with quietly $RESOURCES{('help',|@keys).join("/") ~ '.txt'}.open {
                 handle .slurp(:close).chomp, @keys, :$verbose;
                 exit;
@@ -15,6 +14,14 @@ sub EXPORT($RESOURCES, &proto, &handle = &default-handler) {
                 exit 1;
             }
         }
+
+        &proto.add_dispatchee: $long-only
+          ?? my multi sub MAIN(*@keys, :$help!, :$verbose) {
+                 doit @keys, $verbose
+             }
+          !! my multi sub MAIN(*@keys, :h(:$help)!, :$verbose) {
+                 doit @keys, $verbose
+             }
     }
 
     BEGIN Map.new
@@ -39,6 +46,8 @@ sub handler($text, @subsections, :$verbose) {
     say "Verbose version" if $verbose;
 }
 use CLI::Help %?RESOURCES, &MAIN, &handler;
+
+use CLI::Help %?RESOURCES, &MAIN, &handler, 'long-only';
 
 =end code
 
@@ -80,6 +89,9 @@ Suggestions / bug reports / general comments are welcome at
 Thank you for using rak!
 
 =end code
+
+By specifying a true value as the 4th argument in the C<use>
+statement, will cause only C<--help> to trigger the candidate.
 
 =head1 AUTHOR
 

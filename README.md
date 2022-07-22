@@ -18,6 +18,8 @@ sub handler($text, @subsections, :$verbose) {
     say "Verbose version" if $verbose;
 }
 use CLI::Help %?RESOURCES, &MAIN, &handler;
+
+use CLI::Help %?RESOURCES, &MAIN, &handler, 'long-only';
 ```
 
 DESCRIPTION
@@ -51,6 +53,8 @@ Suggestions / bug reports / general comments are welcome at
 
 Thank you for using rak!
 ```
+
+By specifying a true value as the 4th argument in the `use` statement, will cause only `--help` to trigger the candidate.
 
 AUTHOR
 ======
