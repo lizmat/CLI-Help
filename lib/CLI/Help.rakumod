@@ -10,7 +10,8 @@ sub EXPORT($RESOURCES, &proto, &handle = &default-handler, $long-only = "") {
                 exit;
             } 
             else {
-                note("Unknown help category: @keys[]");
+                handle $RESOURCES<help.txt>.open.slurp(:close), (), :$verbose;
+                note("\nUnknown help category: @keys[]");
                 exit 1;
             }
         }
