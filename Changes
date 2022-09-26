@@ -2,6 +2,9 @@ Revision history for CLI-Help
 
 {{$NEXT}}
 
+0.0.5  2022-09-26T12:13:06+02:00
+    - Handle issue with unknown help categories
+
 0.0.4  2022-08-07T13:40:26+02:00
     - Show default help if unknown help categories specified
 

@@ -5,7 +5,7 @@ sub default-handler($text, @, :verbose($)) {
 sub EXPORT($RESOURCES, &proto, &handle = &default-handler, $long-only = "") {
     with $RESOURCES {
         my sub doit(@keys, $verbose) {
-            with quietly $RESOURCES{('help',|@keys).join("/") ~ '.txt'}.open {
+            with try $RESOURCES{('help',|@keys).join("/") ~ '.txt'}.open {
                 handle .slurp(:close).chomp, @keys, :$verbose;
                 exit;
             } 
